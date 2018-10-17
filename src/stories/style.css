@@ -1,0 +1,42 @@
+.MyTable {
+
+    border: 1px solid #D8E1E8;
+    border-radius: 3px;
+    user-select: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+        'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+.SortIndicator {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.SortIndicator.ASC {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+
+    border-bottom: 8px solid #0e5a8a;
+}
+
+.SortIndicator.DESC {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+
+    border-top: 8px solid #0e5a8a;
+}
+
+.SortIndicator > .counter {
+    position: absolute;
+    font-size: small;
+}
+
+.RowSelected {
+    background-color: #48aff0;
+    color: #fff;
+}

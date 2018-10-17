@@ -1,0 +1,114 @@
+.VTContainer {
+    position: relative;
+}
+
+.VTList {
+    overflow-y: scroll;
+}
+
+.VTHeader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #BFCCD6;
+}
+
+.VTGrid {
+    outline: 1px solid #5c7080;
+}
+
+.VTHeader {
+    position: absolute;
+    display: flex;
+    flex-flow: row nowrap;
+    height: 100%;
+    align-items: stretch;
+    overflow: hidden;
+}
+
+.VTRow {
+    display: flex;
+    flex-flow: row nowrap;
+    height: 100%;
+    align-items: stretch;
+}
+
+.VTRowOdd {
+    background-color: #FFF;
+}
+
+.VTRowEven {
+    background-color: #F5F8FA;
+}
+
+.VTCell,
+.VTHeaderCell {
+    flex-grow: 1;
+    box-sizing: border-box;
+
+    position: relative;
+}
+
+.VTHeaderCell{
+    border-right: 1px solid #8A9BA8;
+}
+
+.VTCell{
+    border-right: 1px solid #BFCCD6;
+    border-bottom: 1px solid #BFCCD6;
+}
+
+.VTRow:last-child > .VTCell {
+    border-bottom: 0;
+}
+
+.VTHeader {
+    box-sizing: border-box;
+    border-bottom: 2px solid #5C7080;
+}
+
+.VTHeaderCell:last-of-type {
+    border-right: 0;
+}
+
+.VTCellContent {
+    overflow: hidden;
+    padding: 0 5px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    height: 100%;
+}
+
+.VTColumnResizer {
+    cursor: col-resize;
+    position: absolute;
+    right: -3px;
+    top: 0;
+    height: 100%;
+    background-color: #FFB366;
+    opacity: 0.0;
+    width: 6px;
+    z-index: 20;
+}
+
+.VTColumnResizerActive {
+    opacity: 0.5;
+    transition: opacity 200ms;
+}
+
+.VTNoItemsLabel {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    font-size: 1em;
+    color: #bdbdbd;
+}
