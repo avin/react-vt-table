@@ -31,3 +31,7 @@ or create your own using existing one
 ### `<Table/>` Prop Types
 
 ### `<Column/>` Prop Types
+
+## License
+
+MIT © [avin](https://github.com/avin)

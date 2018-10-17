@@ -1,6 +1,6 @@
 {
   "name": "react-vt-table",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "files": [
@@ -48,18 +48,19 @@
     "@storybook/addon-links": "^4.0.0-rc.0",
     "@storybook/addons": "^4.0.0-rc.0",
     "@storybook/react": "^4.0.0-rc.0",
-    "classnames": "^2.2.6",
     "cross-env": "^5.2.0",
     "gh-pages": "^2.0.1",
     "immutable": "^4.0.0-rc.10",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-draggable": "^3.0.5",
     "react-scripts": "2.0.5",
-    "react-window": "^1.2.1",
     "rimraf": "^2.6.2",
     "babel-loader": "^8.0.4"
   },
-  "dependencies": {}
+  "dependencies": {
+      "classnames": "^2.2.6",
+      "react-window": "^1.2.1",
+      "react-draggable": "^3.0.5"
+  }
 }
