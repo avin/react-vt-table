@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from '../lib/Table';
-import dataList from './data';
+import dataList from './_data';
 import Column from '../lib/Column';
 
 function rangeArr(from, to) {
@@ -59,7 +59,9 @@ class TableWithSelection extends React.Component {
     render() {
         return (
             <div className="App">
-                <p>Use [<i>Ctrl</i>] and [<i>Shift</i>] keys to multi-select rows.</p>
+                <p>
+                    Use [<i>Ctrl</i>] and [<i>Shift</i>] keys to multi-select rows.
+                </p>
                 <Table
                     className="MyTable"
                     width={800}

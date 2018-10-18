@@ -3,7 +3,7 @@
 }
 
 .VTList {
-    overflow-y: scroll;
+    overflow-y: scroll !important;
 }
 
 .VTHeader {
@@ -11,7 +11,7 @@
     top: 0;
     left: 0;
     right: 0;
-    background-color: #BFCCD6;
+    background-color: #e1e8ed;
 }
 
 .VTGrid {
@@ -35,11 +35,11 @@
 }
 
 .VTRowOdd {
-    background-color: #FFF;
+    background-color: #fff;
 }
 
 .VTRowEven {
-    background-color: #F5F8FA;
+    background-color: #f5f8fa;
 }
 
 .VTCell,
@@ -50,22 +50,19 @@
     position: relative;
 }
 
-.VTHeaderCell{
-    border-right: 1px solid #8A9BA8;
+.VTHeaderCell {
+    border-right: 1px solid #bfccd6;
 }
 
-.VTCell{
-    border-right: 1px solid #BFCCD6;
-    border-bottom: 1px solid #BFCCD6;
-}
-
-.VTRow:last-child > .VTCell {
-    border-bottom: 0;
+.VTCell {
+    border-right: 1px solid #e1e8ed;
+    border-bottom: 1px solid #ced9e0;
 }
 
 .VTHeader {
     box-sizing: border-box;
-    border-bottom: 2px solid #5C7080;
+    border-bottom: 2px solid #5c7080;
+    font-weight: bold;
 }
 
 .VTHeaderCell:last-of-type {
@@ -86,14 +83,18 @@
     right: -3px;
     top: 0;
     height: 100%;
-    background-color: #FFB366;
-    opacity: 0.0;
+    background-color: #1f4b99;
+    opacity: 0;
     width: 6px;
     z-index: 20;
 }
 
+.VTColumnResizer:hover {
+    opacity: 0.1;
+}
+
 .VTColumnResizerActive {
-    opacity: 0.5;
+    opacity: 0.5 !important;
     transition: opacity 200ms;
 }
 

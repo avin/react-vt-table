@@ -4,19 +4,19 @@ import PropTypes from 'prop-types';
 export default class Column extends React.Component {
     static propTypes = {
         /**
-         * Рендер ячейки строки содержимого
+         * Content cell render function
          */
         cellRenderer: PropTypes.func,
         /**
-         * Рендер ячейки строки заколовка
+         * Column header cell render function
          */
         columnHeaderCellRenderer: PropTypes.func,
         /**
-         * Имя поля содержащее данные
+         * Field key containing data
          */
         dataKey: PropTypes.string,
         /**
-         * Ширина колонки по умолчанию
+         * Default column width in pixels
          */
         width: PropTypes.number,
     };

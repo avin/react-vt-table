@@ -12,39 +12,40 @@ export default class Table extends React.Component {
 
     static propTypes = {
         /**
-         * Ширина таблицы
+         * Table width
          */
         width: PropTypes.number.isRequired,
         /**
-         * Высота таблицы
+         * Table height
          */
         height: PropTypes.number.isRequired,
         /**
-         * Высота строки заголовка
+         * Table header height
          */
         headerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
         /**
-         * Высота строки таблицы
+         * Table row height (may be function)
          *
          * @param {Number} index Порядковый номер элемента в списке данных
          */
         rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
         /**
-         * Список данных
+         * Data list
          */
-        data: PropTypes.instanceOf(Immutable.Iterable).isRequired,
+        data: PropTypes.oneOfType([PropTypes.instanceOf(Immutable.Iterable), PropTypes.arrayOf(PropTypes.object)])
+            .isRequired,
         /**
-         * Функция определяющая класс строки
+         * Row className determine function
          */
         rowClassName: PropTypes.func,
         /**
-         * Рендер функция для отрисовки индикатора сортировки
+         * Sort indicator render function
          *
          * @param {object} props
          */
         sortIndicatorRenderer: PropTypes.func,
         /**
-         * Действие при клике на хедер колонки
+         * Mouse action on header row
          *
          * @param {SyntheticEvent} event
          * @param {object} headerCellParams Параметры ячейки заголовка
@@ -55,7 +56,7 @@ export default class Table extends React.Component {
         onHeaderMouseOut: PropTypes.func,
         onHeaderRightClick: PropTypes.func,
         /**
-         * Действие при клике на строку таблицы
+         * Mouse action on table row
          *
          * @param {SyntheticEvent} event
          * @param {object} rowCellParams Параметры ячейки строки таблицы
@@ -66,45 +67,45 @@ export default class Table extends React.Component {
         onRowMouseOut: PropTypes.func,
         onRowRightClick: PropTypes.func,
         /**
-         * Действие при скроле таблицы
+         * Action on table scroll
          *
          * @param {object} params
-         *      @see Смотреть [React-Windows docs](https://react-window.now.sh/#/api/FixedSizeList)
+         *      @see See [React-Windows docs](https://react-window.now.sh/#/api/FixedSizeList)
          */
         onScroll: PropTypes.func,
         /**
-         * Действие при изменении ширины колонки
+         * Action on change column width
          *
          * @param {object} params
          */
         onResizeColumn: PropTypes.func,
         /**
-         * Ширина бокового скрола
+         * Width of vertical table overflow
          */
         overflowWidth: PropTypes.number,
         /**
-         * Минимальная ширина колонки
+         * Minimal column width
          */
         minColumnWidth: PropTypes.number,
         /**
-         * Максимальная ширина колонки
+         * Maximum column width
          */
         maxColumnWidth: PropTypes.number,
         /**
-         * Динамическая ширина колонок не подвергшихся ручному изменению размера
+         * Dynamic width for columns that was not resized
          */
         dynamicColumnWidth: PropTypes.bool,
         /**
-         * Свойства для вложенного компонента списка react-window
-         * @see Смотреть [React-Windows docs](https://react-window.now.sh/#/api/FixedSizeList)
+         * Props for inner `react-window` list component
+         * @see See [React-Windows docs](https://react-window.now.sh/#/api/FixedSizeList)
          */
         listProps: PropTypes.object,
         /**
-         * Надпись информирующая об отсутствии элементов в таблице
+         * No items in data list label
          */
         noItemsLabel: PropTypes.node,
         /**
-         * Отключить хедер таблицы
+         * Hide table header row
          */
         disableHeader: PropTypes.bool,
         /**
@@ -118,8 +119,8 @@ export default class Table extends React.Component {
     };
 
     static defaultProps = {
-        headerHeight: 35,
-        rowHeight: 35,
+        headerHeight: 30,
+        rowHeight: 30,
         onHeaderClick: f => f,
         onResizeColumn: f => f,
         onRowClick: f => f,
@@ -136,7 +137,7 @@ export default class Table extends React.Component {
         let customColumnsWidth = [];
         let customColumnsCount = 0;
         let customColumnsWidthSum = 0;
-        //Заполняем массив с ширинами колонок значениями из компонент колонок
+
         React.Children.forEach(children, (child, idx) => {
             let { width } = child.props;
             if (Number.isInteger(width)) {
@@ -148,7 +149,7 @@ export default class Table extends React.Component {
         });
 
         if (!dynamicColumnWidth) {
-            //Заполняем оставшиеся значения усредненной шириной по оставшемуся пространству
+            //Fill other width averaged width values
             const defaultWidth = Math.max(
                 (width - overflowWidth - customColumnsWidthSum) / (React.Children.count(children) - customColumnsCount),
                 minColumnWidth,
@@ -302,9 +303,35 @@ export default class Table extends React.Component {
         );
     }
 
+    getDataRow(index) {
+        const { data } = this.props;
+        if (data instanceof Immutable.Iterable) {
+            return data.get(index);
+        } else {
+            return data[index];
+        }
+    }
+
+    getDataRowItem(rowData, dataKey) {
+        if (rowData instanceof Immutable.Map) {
+            return rowData.get(dataKey);
+        } else {
+            return rowData[dataKey];
+        }
+    }
+    getDataSize() {
+        const { data } = this.props;
+
+        if (data instanceof Immutable.Iterable) {
+            return data.size;
+        } else {
+            return data.length;
+        }
+    }
+
     row = ({ index, style }) => {
-        const { data, rowClassName } = this.props;
-        const rowData = data.get(index);
+        const { rowClassName } = this.props;
+        const rowData = this.getDataRow(index);
 
         const evenClassName = index % 2 === 0 ? 'VTRowOdd' : 'VTRowEven';
         const customClassName = rowClassName && rowClassName(index);
@@ -319,9 +346,14 @@ export default class Table extends React.Component {
                     if (cellRenderer) {
                         content = cellRenderer({ dataKey, rowData, columnIndex: idx });
                     } else {
+                        const contentStr = this.getDataRowItem(rowData, dataKey);
                         content = (
-                            <div className="VTCellContent" title={rowData.get(dataKey)} style={{ lineHeight: style.height + 'px' }}>
-                                {rowData.get(dataKey)}
+                            <div
+                                className="VTCellContent"
+                                title={contentStr}
+                                style={{ lineHeight: style.height + 'px' }}
+                            >
+                                {contentStr}
                             </div>
                         );
                     }
@@ -358,7 +390,7 @@ export default class Table extends React.Component {
     }
 
     render() {
-        const { height, width, data, listProps, className } = this.props;
+        const { height, width, listProps, className } = this.props;
 
         return (
             <div
@@ -368,14 +400,14 @@ export default class Table extends React.Component {
             >
                 {this.renderHeader()}
 
-                {data.size ? (
+                {this.getDataSize() ? (
                     <List
                         ref={i => (this.list = i)}
                         innerRef={i => (this.listInnerEl = i)}
                         outerRef={i => (this.listOuterEl = i)}
                         className="VTList"
                         height={height}
-                        itemCount={data.size}
+                        itemCount={this.getDataSize()}
                         itemSize={this.getRowHeight}
                         width={width}
                         {...listProps}

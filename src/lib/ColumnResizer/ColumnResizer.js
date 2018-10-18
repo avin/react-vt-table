@@ -4,6 +4,9 @@ import Draggable from 'react-draggable';
 
 export default class ColumnResizer extends React.Component {
     static propTypes = {
+        /**
+         * Action on resize column
+         */
         onResizeColumn: PropTypes.func.isRequired,
     };
 

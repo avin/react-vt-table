@@ -26,7 +26,7 @@ for (let i = 0; i < 1000; i += 1) {
             c2: `${Math.floor(i / 10)}_word_c2`,
             c3: `${Math.floor(i / 10)}_${randomStr()}_word_c3`,
             c4: `${Math.floor(i / 10)}_${randomStr()}_word_c4`,
-            color: randomColor()
+            color: randomColor(),
         }),
     );
 }

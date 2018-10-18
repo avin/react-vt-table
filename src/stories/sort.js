@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from '../lib/Table';
-import dataList from './data';
+import dataList from './_data';
 import Column from '../lib/Column';
 
 export function multiSort(list, keys) {
@@ -88,7 +88,9 @@ class TableWithSorting extends React.Component {
     render() {
         return (
             <div className="App">
-                <p>Click on header's cells to sort data. Use [<i>Ctrl</i>] to multi-sort.</p>
+                <p>
+                    Click on header's cells to sort data. Use [<i>Ctrl</i>] to multi-sort.
+                </p>
                 <Table
                     className="MyTable"
                     width={800}

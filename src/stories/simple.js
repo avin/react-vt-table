@@ -1,5 +1,5 @@
 import Table from '../lib/Table';
-import dataList from './data';
+import dataList from './_data';
 import { action } from '@storybook/addon-actions';
 import Column from '../lib/Column';
 import React from 'react';
