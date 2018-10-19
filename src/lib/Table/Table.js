@@ -228,6 +228,38 @@ export default class Table extends React.Component {
         return headerHeight;
     };
 
+    getDataRow(index) {
+        const { data } = this.props;
+        if (data instanceof Immutable.Iterable) {
+            return data.get(index);
+        } else {
+            return data[index];
+        }
+    }
+
+    getDataRowItem(rowData, dataKey) {
+        if (rowData instanceof Immutable.Map) {
+            return rowData.get(dataKey);
+        } else {
+            return rowData[dataKey];
+        }
+    }
+
+    getDataSize() {
+        const { data } = this.props;
+
+        if (data instanceof Immutable.Iterable) {
+            return data.size;
+        } else {
+            return data.length;
+        }
+    }
+
+    getRowWidth() {
+        const { customColumnsWidth } = this.state;
+        return customColumnsWidth.reduce((result, item) => result + item, 0);
+    }
+
     handleResizeColumn = (columnIndex, diff, dataKey) => {
         const { minColumnWidth, maxColumnWidth, onResizeColumn } = this.props;
         const { customColumnsWidth } = this.state;
@@ -247,6 +279,14 @@ export default class Table extends React.Component {
 
         onResizeColumn({ dataKey, columnIndex, resizeDiff: diff, newWidth });
     };
+
+    scrollTo(...args) {
+        this.list.scrollTo(...args);
+    }
+
+    scrollToItem(...args) {
+        this.list.scrollToItem(...args);
+    }
 
     renderHeaderSortIndicator(columnComponent, columnIndex) {
         const { dataKey } = columnComponent.props;
@@ -309,34 +349,10 @@ export default class Table extends React.Component {
         );
     }
 
-    getDataRow(index) {
-        const { data } = this.props;
-        if (data instanceof Immutable.Iterable) {
-            return data.get(index);
-        } else {
-            return data[index];
-        }
-    }
-
-    getDataRowItem(rowData, dataKey) {
-        if (rowData instanceof Immutable.Map) {
-            return rowData.get(dataKey);
-        } else {
-            return rowData[dataKey];
-        }
-    }
-    getDataSize() {
-        const { data } = this.props;
-
-        if (data instanceof Immutable.Iterable) {
-            return data.size;
-        } else {
-            return data.length;
-        }
-    }
-
     row = ({ index, style }) => {
         const { rowClassName, rowRenderer } = this.props;
+
+        style = { ...style, width: this.getRowWidth() };
 
         if (rowRenderer) {
             const rowRendererContent = rowRenderer({ index, style });
@@ -351,7 +367,7 @@ export default class Table extends React.Component {
         const customClassName = rowClassName && rowClassName(index);
 
         return (
-            <div className={classNames('VTRow', evenClassName, customClassName)} style={{ ...style, width: undefined }}>
+            <div className={classNames('VTRow', evenClassName, customClassName)} style={style}>
                 {React.Children.map(this.props.children, (child, idx) => {
                     const { cellRenderer, dataKey } = child.props;
                     const width = this.getColumnWidth(idx);
@@ -401,14 +417,6 @@ export default class Table extends React.Component {
         const { noItemsLabel } = this.props;
 
         return <div className="VTNoItemsLabel">{noItemsLabel}</div>;
-    }
-
-    scrollTo(...args) {
-        this.list.scrollTo(...args);
-    }
-
-    scrollToItem(...args) {
-        this.list.scrollToItem(...args);
     }
 
     render() {
