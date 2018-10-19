@@ -48,6 +48,8 @@
     background-color: #f5498b;
     color: #fff;
     font-weight: bold;
+    padding: 0 40px;
+    box-sizing: border-box;
 }
 
 .DescriptionBlock {

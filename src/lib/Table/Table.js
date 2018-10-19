@@ -418,7 +418,7 @@ export default class Table extends React.Component {
             <div
                 className={classNames('VTContainer', className)}
                 ref={i => (this.containerEl = i)}
-                style={{ paddingTop: this.getHeaderHeight(), width: width, height: height }}
+                style={{ paddingTop: this.getHeaderHeight(), width: width, height: height - this.getHeaderHeight() }}
             >
                 {this.renderHeader()}
 
@@ -428,7 +428,7 @@ export default class Table extends React.Component {
                         innerRef={i => (this.listInnerEl = i)}
                         outerRef={i => (this.listOuterEl = i)}
                         className="VTList"
-                        height={height}
+                        height={height - this.getHeaderHeight()}
                         itemCount={this.getDataSize()}
                         itemSize={this.getRowHeight}
                         width={width}
