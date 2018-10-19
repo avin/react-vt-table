@@ -403,6 +403,14 @@ export default class Table extends React.Component {
         return <div className="VTNoItemsLabel">{noItemsLabel}</div>;
     }
 
+    scrollTo(...args) {
+        this.list.scrollTo(...args);
+    }
+
+    scrollToItem(...args) {
+        this.list.scrollToItem(...args);
+    }
+
     render() {
         const { height, width, listProps, className } = this.props;
 

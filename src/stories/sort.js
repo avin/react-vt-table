@@ -88,9 +88,9 @@ class TableWithSorting extends React.Component {
     render() {
         return (
             <div className="App">
-                <p>
+                <div className="DescriptionBlock">
                     Click on header's cells to sort data. Use [<i>Ctrl</i>] to multi-sort.
-                </p>
+                </div>
                 <Table
                     className="MyTable"
                     width={800}

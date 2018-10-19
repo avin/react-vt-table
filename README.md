@@ -35,7 +35,9 @@ or create your own using existing one
 
 ## API
 
-### `<Table />` Props
+### `<Table />`
+
+#### Props
 
 | Property                | Type               | Required? | Description                                                                                                                                |
 | :---------------------- | :----------------- | :-------: | :----------------------------------------------------------------------------------------------------------------------------------------- |
@@ -68,6 +70,14 @@ or create your own using existing one
 | disableHeader           | Bool               |           | Hide table header row.                                                                                                                     |
 | className               | String             |           | Optional custom CSS class name to attach to root container element.                                                                        |
 | id                      | String             |           | Optional custom id to attach to root container element.                                                                                    |
+
+#### Methods
+
+**scrollTo(scrollOffset: number): void**
+
+**scrollToItem(index: number, align: string = "auto"): void**
+
+For more info see [React-Windows docs](https://react-window.now.sh/#/api/FixedSizeGrid)
 
 ### `<Column />` Props
 

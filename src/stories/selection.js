@@ -59,9 +59,9 @@ class TableWithSelection extends React.Component {
     render() {
         return (
             <div className="App">
-                <p>
+                <div className="DescriptionBlock">
                     Use [<i>Ctrl</i>] and [<i>Shift</i>] keys to multi-select rows.
-                </p>
+                </div>
                 <Table
                     className="MyTable"
                     width={800}
