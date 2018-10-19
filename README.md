@@ -59,7 +59,7 @@ or create your own using existing one
 | onRowMouseOver          | Func               |           | Mouse Over action on table row. <br>Function params: `(event, { dataKey, columnIndex })`.                                                  |
 | onRowMouseOut           | Func               |           | Mouse Out action on table row. <br>Function params: `(event, { dataKey, columnIndex })`.                                                   |
 | onRowRightClick         | Func               |           | Right Click Mouse action on table row. <br>Function params: `(event, { dataKey, columnIndex })`.                                           |
-| onScroll                | Func               |           | Action on table scroll. <br>Function params: See [React-Windows docs](https://react-window.now.sh/#/api/FixedSizeList).                    |
+| onScroll                | Func               |           | Action on table scroll. <br>Function params: See [React-Window's docs](https://react-window.now.sh/#/api/FixedSizeList).                   |
 | onResizeColumn          | Func               |           | Action on change column width. <br>Function params: `({ dataKey, columnIndex, resizeDiff, newWidth })`.                                    |
 | overflowWidth           | Number             |           | Width of vertical table overflow.                                                                                                          |
 | minColumnWidth          | Number             |           | Minimal column width.                                                                                                                      |
@@ -77,7 +77,7 @@ or create your own using existing one
 
 **scrollToItem(index: number, align: string = "auto"): void**
 
-For more info see [React-Windows docs](https://react-window.now.sh/#/api/FixedSizeGrid)
+For more info see [React-Window's docs](https://react-window.now.sh/#/api/FixedSizeGrid)
 
 ### `<Column />` Props
 
