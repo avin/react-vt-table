@@ -39,6 +39,12 @@ export default class Table extends React.Component {
          */
         rowClassName: PropTypes.func,
         /**
+         * Personal row renderer function (If nothing return, then internal row function will be applied)
+         *
+         * @param {object} props
+         */
+        rowRenderer: PropTypes.func,
+        /**
          * Sort indicator render function
          *
          * @param {object} props
@@ -330,7 +336,15 @@ export default class Table extends React.Component {
     }
 
     row = ({ index, style }) => {
-        const { rowClassName } = this.props;
+        const { rowClassName, rowRenderer } = this.props;
+
+        if (rowRenderer) {
+            const rowRendererContent = rowRenderer({ index, style });
+            if (rowRendererContent) {
+                return rowRendererContent;
+            }
+        }
+
         const rowData = this.getDataRow(index);
 
         const evenClassName = index % 2 === 0 ? 'VTRowOdd' : 'VTRowEven';

@@ -4,8 +4,10 @@ import './style.css';
 import simple from './simple';
 import sort from './sort';
 import selection from './selection';
+import rowRenderer from './rowRenderer';
 
 storiesOf('Table', module)
     .add('Simple table', simple)
     .add('Table with sorting', sort)
-    .add('Table with selection', selection);
+    .add('Table with selection', selection)
+    .add('Custom row renderer', rowRenderer);
