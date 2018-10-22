@@ -34,8 +34,7 @@ export default class Table extends React.Component {
         /**
          * Data list
          */
-        data: PropTypes.oneOfType([PropTypes.instanceOf(Immutable.Iterable), PropTypes.arrayOf(PropTypes.object)])
-            .isRequired,
+        data: PropTypes.any.isRequired,
         /**
          * Row className determine function
          */
@@ -255,7 +254,7 @@ export default class Table extends React.Component {
 
     getDataRow = index => {
         const { data } = this.props;
-        if (data instanceof Immutable.Iterable) {
+        if (Immutable.Iterable.isIterable(data)) {
             return data.get(index);
         } else {
             return data[index];
@@ -263,7 +262,7 @@ export default class Table extends React.Component {
     };
 
     getDataRowItem = ({ rowData, dataKey }) => {
-        if (rowData instanceof Immutable.Map) {
+        if (Immutable.Iterable.isIterable(rowData)) {
             return rowData.get(dataKey);
         } else {
             return rowData[dataKey];
@@ -273,7 +272,7 @@ export default class Table extends React.Component {
     getDataSize = () => {
         const { data } = this.props;
 
-        if (data instanceof Immutable.Iterable) {
+        if (Immutable.Iterable.isIterable(data)) {
             return data.size;
         } else {
             return data.length;
