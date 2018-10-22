@@ -32,18 +32,7 @@ export default () => {
                 disableHeader={false}
             >
                 <Column label="c1" dataKey="c1" width={500} />
-                <Column
-                    label="c2"
-                    dataKey="c2"
-                    cellRenderer={({ dataKey, rowData }) => (
-                        <div
-                            className="VTCellContent"
-                            style={{ fontWeight: 'bold', backgroundColor: rowData.get('color') }}
-                        >
-                            {rowData.get(dataKey)}
-                        </div>
-                    )}
-                />
+                <Column label="c2" dataKey="c2" />
                 <Column label="c3" dataKey="c3" />
                 <Column label="c4" dataKey="c4" />
             </Table>

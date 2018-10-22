@@ -64,11 +64,7 @@ export default class Row extends React.Component {
                     } else {
                         const contentStr = getDataRowItem({ rowData, dataKey });
                         content = (
-                            <div
-                                className="VTCellContent"
-                                title={contentStr}
-                                style={{ lineHeight: style.height + 'px' }}
-                            >
+                            <div className="VTCellContent" title={contentStr}>
                                 {contentStr}
                             </div>
                         );

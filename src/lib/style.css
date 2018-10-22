@@ -58,6 +58,11 @@
 .VTCell {
     border-right: 1px solid #e1e8ed;
     border-bottom: 1px solid #ced9e0;
+
+    -ms-flex-align: center;
+    align-items: center;
+    display: -ms-flexbox;
+    display: flex;
 }
 
 .VTHeader {
@@ -72,10 +77,9 @@
 
 .VTCellContent {
     overflow: hidden;
-    padding: 0 5px;
+    padding: 0 0.5em;
     white-space: nowrap;
     text-overflow: ellipsis;
-    height: 100%;
 }
 
 .VTColumnResizer {

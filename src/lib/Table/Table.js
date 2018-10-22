@@ -198,7 +198,7 @@ export default class Table extends React.Component {
     }
 
     getColumnWidth = columnIndex => {
-        const { children, width, overflowWidth, minColumnWidth, dynamicColumnWidth } = this.props;
+        const { width, overflowWidth, minColumnWidth, dynamicColumnWidth } = this.props;
         const { customColumnsWidth } = this.state;
 
         if (!dynamicColumnWidth) {

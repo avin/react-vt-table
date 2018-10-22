@@ -14,7 +14,6 @@ export default () => {
                 data={dataList}
                 rowHeight={i => Math.floor(20 + Math.random() * 60)}
                 onRowClick={action('row clicked')}
-                dynamicColumnWidth={false}
                 disableHeader={false}
             >
                 <Column label="c1" dataKey="c1" width={500} />
@@ -24,9 +23,16 @@ export default () => {
                     cellRenderer={({ dataKey, rowData }) => (
                         <div
                             className="VTCellContent"
-                            style={{ fontWeight: 'bold', backgroundColor: rowData.get('color') }}
+                            style={{
+                                fontWeight: 'bold',
+                                backgroundColor: rowData.get('color'),
+                                height: '100%',
+                                width: '100%',
+                                display: 'flex',
+                                alignItems: 'center',
+                            }}
                         >
-                            {rowData.get(dataKey)}
+                            <div>{rowData.get(dataKey)}</div>
                         </div>
                     )}
                 />
