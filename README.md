@@ -48,7 +48,7 @@ or create your own using existing one
 | data                  | Immutable.Iterable |     ✓     | Data list for table content.                                                                                                  |
 | rowClassName          | Func               |           | Row className determine function. <br>Function params: `(rowIndex)`.                                                          |
 | rowRenderer           | Func               |           | Personal row renderer function. <br>Function params: see `<Row />` props.                                                     |
-| sortIndicatorRenderer | Func               |     ✓     | Sort indicator render function. <br>Function params: `({ dataKey, columnIndex })`.                                            |
+| sortIndicatorRenderer | Func               |           | Sort indicator render function. <br>Function params: `({ dataKey, columnIndex })`.                                            |
 | onHeaderClick         | Func               |           | Click Mouse action on header row. <br>Function params: `(event, { dataKey, columnIndex })`.                                   |
 | onHeaderDoubleClick   | Func               |           | Double Click Mouse action on header row. <br>Function params: `(event, { dataKey, columnIndex })`.                            |
 | onHeaderMouseOver     | Func               |           | Mouse Over action on header row. <br>Function params: `(event, { dataKey, columnIndex })`.                                    |
