@@ -42,9 +42,7 @@ export default class Row extends React.Component {
         onRightClick: PropTypes.func,
     };
     render() {
-        let { index, rowClassName, style, getDataRow, getDataRowItem, getColumnWidth, children } = this.props;
-
-        const rowData = getDataRow(index);
+        let { rowData, index, rowClassName, style, getDataRow, getDataRowItem, getColumnWidth, children } = this.props;
 
         const evenClassName = index % 2 === 0 ? 'VTRowOdd' : 'VTRowEven';
         const customClassName = rowClassName && rowClassName(index);
@@ -73,7 +71,7 @@ export default class Row extends React.Component {
                     const getAction = actionName => {
                         const action = this.props[actionName];
                         if (action) {
-                            return event => action(event, { rowIndex: index, dataKey, columnIndex: idx });
+                            return event => action(event, { rowIndex: index, dataKey, columnIndex: idx, rowData });
                         }
                     };
 

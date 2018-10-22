@@ -358,7 +358,8 @@ export default class Table extends React.Component {
 
         return props => {
             const style = { ...props.style, width: this.getRowWidth() };
-            return <RowComponent {...{ ...props, style, ...componentProps }} />;
+            const rowData = this.getDataRow(props.index);
+            return <RowComponent {...{ ...props, style, rowData, ...componentProps }} />;
         };
     }
 
