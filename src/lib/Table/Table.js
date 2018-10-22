@@ -140,14 +140,17 @@ export default class Table extends React.Component {
 
     constructor(props) {
         super(props);
-        const { overflowWidth, width, minColumnWidth, dynamicColumnWidth } = this.props;
+        const { children, overflowWidth, width, minColumnWidth, dynamicColumnWidth } = this.props;
 
         let customColumnsWidth = [];
         let customColumnsCount = 0;
         let customColumnsWidthSum = 0;
 
-        this.getColumns().forEach((column, idx) => {
-            let { width } = column.props;
+        React.Children.forEach(children, (child, idx) => {
+            if (!child) {
+                return;
+            }
+            let { width } = child.props;
             if (Number.isInteger(width)) {
                 width = Math.max(width, minColumnWidth);
                 customColumnsCount += 1;
@@ -159,7 +162,7 @@ export default class Table extends React.Component {
         if (!dynamicColumnWidth) {
             //Fill other width averaged width values
             const defaultWidth = Math.max(
-                (width - overflowWidth - customColumnsWidthSum) / (this.getColumns().length - customColumnsCount),
+                (width - overflowWidth - customColumnsWidthSum) / (this.getColumnsCount() - customColumnsCount),
                 minColumnWidth,
             );
             customColumnsWidth = customColumnsWidth.map(item => {
@@ -170,6 +173,18 @@ export default class Table extends React.Component {
             });
         }
         this.state.customColumnsWidth = customColumnsWidth;
+    }
+
+    getColumnsCount() {
+        const { children } = this.props;
+
+        let total = 0;
+        React.Children.forEach(children, child => {
+            if (child && child.type === Column) {
+                total += 1;
+            }
+        });
+        return total;
     }
 
     componentDidMount() {
@@ -183,20 +198,8 @@ export default class Table extends React.Component {
         }
     }
 
-    getColumns() {
-        const { children } = this.props;
-
-        const result = [];
-        React.Children.forEach(children, (child, idx) => {
-            if (child && child.type === Column) {
-                result.push(child);
-            }
-        });
-        return result;
-    }
-
     getColumnWidth = columnIndex => {
-        const { width, overflowWidth, minColumnWidth, dynamicColumnWidth } = this.props;
+        const { children, width, overflowWidth, minColumnWidth, dynamicColumnWidth } = this.props;
         const { customColumnsWidth } = this.state;
 
         if (!dynamicColumnWidth) {
@@ -217,7 +220,7 @@ export default class Table extends React.Component {
         });
 
         return Math.max(
-            (width - overflowWidth - customColumnsWidthSum) / (this.getColumns().length - customColumnsCount),
+            (width - overflowWidth - customColumnsWidthSum) / (this.getColumnsCount() - customColumnsCount),
             minColumnWidth,
         );
     };
@@ -311,14 +314,14 @@ export default class Table extends React.Component {
     }
 
     renderHeader() {
-        const { disableHeader, headerHeight, sortIndicatorRenderer } = this.props;
+        const { children, disableHeader, headerHeight, sortIndicatorRenderer } = this.props;
 
         if (disableHeader) {
             return null;
         }
 
         const componentProps = {
-            columns: this.getColumns(),
+            children: children,
             height: headerHeight,
             getColumnWidth: this.getColumnWidth,
             getHeaderHeight: this.getHeaderHeight,
@@ -336,10 +339,10 @@ export default class Table extends React.Component {
     }
 
     renderRow() {
-        const { rowClassName, rowRenderer } = this.props;
+        const { rowClassName, children, rowRenderer } = this.props;
 
         const componentProps = {
-            columns: this.getColumns(),
+            children: children,
             rowClassName,
             getRowWidth: this.getRowWidth,
             getDataRowItem: this.getDataRowItem,

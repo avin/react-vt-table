@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 export default class Header extends React.Component {
     static propTypes = {
-        columns: PropTypes.array.isRequired,
+        children: PropTypes.array,
         getHeaderHeight: PropTypes.func.isRequired,
         getColumnWidth: PropTypes.func.isRequired,
         height: PropTypes.number.isRequired,
@@ -23,10 +23,13 @@ export default class Header extends React.Component {
     };
 
     render() {
-        const { columns, height, getHeaderHeight, getColumnWidth, onResizeColumn, sortIndicatorRenderer } = this.props;
+        const { children, height, getHeaderHeight, getColumnWidth, onResizeColumn, sortIndicatorRenderer } = this.props;
         return (
             <div className="VTHeader" style={{ height: getHeaderHeight() }} ref={i => (this.headerEl = i)}>
-                {columns.map((child, idx) => {
+                {React.Children.map(children, (child, idx) => {
+                    if (!child) {
+                        return null;
+                    }
                     let { label, dataKey, columnHeaderCellRenderer } = child.props;
                     const width = getColumnWidth(idx);
 

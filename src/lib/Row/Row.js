@@ -15,7 +15,7 @@ export default class Row extends React.Component {
         /**
          * Table columns array
          */
-        columns: PropTypes.array,
+        children: PropTypes.array,
         /**
          * Row className determine function
          */
@@ -42,7 +42,7 @@ export default class Row extends React.Component {
         onRightClick: PropTypes.func,
     };
     render() {
-        let { index, rowClassName, style, getDataRow, getDataRowItem, getColumnWidth, columns } = this.props;
+        let { index, rowClassName, style, getDataRow, getDataRowItem, getColumnWidth, children } = this.props;
 
         const rowData = getDataRow(index);
 
@@ -51,7 +51,10 @@ export default class Row extends React.Component {
 
         return (
             <div className={classNames('VTRow', evenClassName, customClassName)} style={style}>
-                {columns.map((child, idx) => {
+                {React.Children.map(children, (child, idx) => {
+                    if (!child) {
+                        return null;
+                    }
                     const { cellRenderer, dataKey } = child.props;
                     const width = getColumnWidth(idx);
 
