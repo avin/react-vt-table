@@ -178,7 +178,6 @@ export default class Table extends React.Component {
         if (!disableHeader) {
             this.listOuterEl &&
                 this.listOuterEl.addEventListener('scroll', e => {
-                    console.log(this.header);
                     this.header.headerEl.scrollLeft = e.target.scrollLeft;
                 });
         }
@@ -190,7 +189,6 @@ export default class Table extends React.Component {
         const result = [];
         React.Children.forEach(children, (child, idx) => {
             if (child && child.type === Column) {
-                console.log(child);
                 result.push(child);
             }
         });
@@ -198,7 +196,7 @@ export default class Table extends React.Component {
     }
 
     getColumnWidth = columnIndex => {
-        const { children, width, overflowWidth, minColumnWidth, dynamicColumnWidth } = this.props;
+        const { width, overflowWidth, minColumnWidth, dynamicColumnWidth } = this.props;
         const { customColumnsWidth } = this.state;
 
         if (!dynamicColumnWidth) {
