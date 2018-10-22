@@ -3,7 +3,8 @@ import { VariableSizeList as List } from 'react-window';
 import PropTypes from 'prop-types';
 import * as Immutable from 'immutable';
 import classNames from 'classnames';
-import ColumnResizer from '../ColumnResizer';
+import Header from '../Header/Header';
+import Row from '../Row/Row';
 
 export default class Table extends React.Component {
     state = {
@@ -58,7 +59,7 @@ export default class Table extends React.Component {
          */
         onHeaderClick: PropTypes.func,
         onHeaderDoubleClick: PropTypes.func,
-        onHeaderHeaderMouseOver: PropTypes.func,
+        onHeaderMouseOver: PropTypes.func,
         onHeaderMouseOut: PropTypes.func,
         onHeaderRightClick: PropTypes.func,
         /**
@@ -176,7 +177,8 @@ export default class Table extends React.Component {
         if (!disableHeader) {
             this.listOuterEl &&
                 this.listOuterEl.addEventListener('scroll', e => {
-                    this.headerEl.scrollLeft = e.target.scrollLeft;
+                    console.log(this.header);
+                    this.header.headerEl.scrollLeft = e.target.scrollLeft;
                 });
         }
     }
@@ -216,6 +218,14 @@ export default class Table extends React.Component {
         return rowHeight;
     };
 
+    getEstimatedItemSize = () => {
+        const { data } = this.props;
+        const total = data.reduce((total, item, idx) => {
+            return total + this.getRowHeight(idx);
+        }, 0);
+        return Math.floor(total / this.getDataSize());
+    };
+
     getHeaderHeight = () => {
         const { headerHeight, disableHeader } = this.props;
         if (disableHeader) {
@@ -228,24 +238,24 @@ export default class Table extends React.Component {
         return headerHeight;
     };
 
-    getDataRow(index) {
+    getDataRow = index => {
         const { data } = this.props;
         if (data instanceof Immutable.Iterable) {
             return data.get(index);
         } else {
             return data[index];
         }
-    }
+    };
 
-    getDataRowItem(rowData, dataKey) {
+    getDataRowItem = ({ rowData, dataKey }) => {
         if (rowData instanceof Immutable.Map) {
             return rowData.get(dataKey);
         } else {
             return rowData[dataKey];
         }
-    }
+    };
 
-    getDataSize() {
+    getDataSize = () => {
         const { data } = this.props;
 
         if (data instanceof Immutable.Iterable) {
@@ -253,12 +263,12 @@ export default class Table extends React.Component {
         } else {
             return data.length;
         }
-    }
+    };
 
-    getRowWidth() {
+    getRowWidth = () => {
         const { customColumnsWidth } = this.state;
         return customColumnsWidth.reduce((result, item) => result + item, 0);
-    }
+    };
 
     handleResizeColumn = (columnIndex, diff, dataKey) => {
         const { minColumnWidth, maxColumnWidth, onResizeColumn } = this.props;
@@ -288,130 +298,55 @@ export default class Table extends React.Component {
         this.list.scrollToItem(...args);
     }
 
-    renderHeaderSortIndicator(columnComponent, columnIndex) {
-        const { dataKey } = columnComponent.props;
-        const { sortIndicatorRenderer } = this.props;
-        if (sortIndicatorRenderer) {
-            return sortIndicatorRenderer({ dataKey, columnIndex });
-        }
-    }
-
     renderHeader() {
-        const { children, disableHeader, headerHeight } = this.props;
+        const { children, disableHeader, headerHeight, sortIndicatorRenderer } = this.props;
+
         if (disableHeader) {
             return null;
         }
 
-        return (
-            <div className="VTHeader" style={{ height: this.getHeaderHeight() }} ref={i => (this.headerEl = i)}>
-                {React.Children.map(children, (child, idx) => {
-                    let { label, dataKey, columnHeaderCellRenderer } = child.props;
-                    const width = this.getColumnWidth(idx);
+        const componentProps = {
+            columns: React.Children.toArray(children),
+            height: headerHeight,
+            getColumnWidth: this.getColumnWidth,
+            getHeaderHeight: this.getHeaderHeight,
+            onResizeColumn: this.handleResizeColumn,
+            onClick: this.props.onHeaderClick,
+            onDoubleClick: this.props.onHeaderDoubleClick,
+            onMouseOver: this.props.onHeaderMouseOver,
+            onMouseOut: this.props.onHeaderMouseOut,
+            onRightClick: this.props.onHeaderRightClick,
+            sortIndicatorRenderer: sortIndicatorRenderer,
+            ref: i => (this.header = i),
+        };
 
-                    let content;
-                    if (columnHeaderCellRenderer) {
-                        content = columnHeaderCellRenderer({ label, dataKey, columnIndex: idx });
-                    } else {
-                        content = (
-                            <div className="VTCellContent" title={label} style={{ lineHeight: headerHeight + 'px' }}>
-                                {label}
-                            </div>
-                        );
-                    }
-
-                    const getAction = actionName => {
-                        const action = this.props[actionName];
-                        if (action) {
-                            return event => action(event, { dataKey, columnIndex: idx });
-                        }
-                    };
-
-                    return (
-                        <div
-                            className="VTHeaderCell"
-                            style={{ minWidth: width, maxWidth: width }}
-                            onClick={getAction('onHeaderClick')}
-                            onDoubleClick={getAction('onHeaderDoubleClick')}
-                            onMouseOver={getAction('onHeaderHeaderMouseOver')}
-                            onMouseOut={getAction('onHeaderMouseOut')}
-                            onContextMenu={getAction('onHeaderRightClick')}
-                        >
-                            {content}
-
-                            <ColumnResizer onResizeColumn={diff => this.handleResizeColumn(idx, diff, dataKey)} />
-
-                            {this.renderHeaderSortIndicator(child, idx)}
-                        </div>
-                    );
-                })}
-                <div className="VTHeaderCell" style={{ minWidth: 17, maxWidth: 17 }} />
-            </div>
-        );
+        return <Header {...componentProps} />;
     }
 
-    row = ({ index, style }) => {
-        const { rowClassName, rowRenderer } = this.props;
+    renderRow() {
+        const { rowClassName, children, rowRenderer } = this.props;
 
-        style = { ...style, width: this.getRowWidth() };
+        const componentProps = {
+            columns: React.Children.toArray(children),
+            rowClassName,
+            getRowWidth: this.getRowWidth,
+            getDataRowItem: this.getDataRowItem,
+            getColumnWidth: this.getColumnWidth,
+            getDataRow: this.getDataRow,
+            onClick: this.props.onRowClick,
+            onDoubleClick: this.props.onRowDoubleClick,
+            onMouseOver: this.props.onRowMouseOver,
+            onMouseOut: this.props.onRowMouseOut,
+            onRightClick: this.props.onRowRightClick,
+        };
 
-        if (rowRenderer) {
-            const rowRendererContent = rowRenderer({ index, style });
-            if (rowRendererContent) {
-                return rowRendererContent;
-            }
-        }
+        const RowComponent = rowRenderer ? rowRenderer : Row;
 
-        const rowData = this.getDataRow(index);
-
-        const evenClassName = index % 2 === 0 ? 'VTRowOdd' : 'VTRowEven';
-        const customClassName = rowClassName && rowClassName(index);
-
-        return (
-            <div className={classNames('VTRow', evenClassName, customClassName)} style={style}>
-                {React.Children.map(this.props.children, (child, idx) => {
-                    const { cellRenderer, dataKey } = child.props;
-                    const width = this.getColumnWidth(idx);
-
-                    let content;
-                    if (cellRenderer) {
-                        content = cellRenderer({ dataKey, rowData, columnIndex: idx });
-                    } else {
-                        const contentStr = this.getDataRowItem(rowData, dataKey);
-                        content = (
-                            <div
-                                className="VTCellContent"
-                                title={contentStr}
-                                style={{ lineHeight: style.height + 'px' }}
-                            >
-                                {contentStr}
-                            </div>
-                        );
-                    }
-
-                    const getAction = actionName => {
-                        const action = this.props[actionName];
-                        if (action) {
-                            return event => action(event, { rowIndex: index, dataKey, columnIndex: idx });
-                        }
-                    };
-
-                    return (
-                        <div
-                            className="VTCell"
-                            style={{ minWidth: width, maxWidth: width }}
-                            onClick={getAction('onRowClick')}
-                            onDoubleClick={getAction('onRowDoubleClick')}
-                            onMouseOver={getAction('onRowMouseOver')}
-                            onMouseOut={getAction('onRowMouseOut')}
-                            onContextMenu={getAction('onRowRightClick')}
-                        >
-                            {content}
-                        </div>
-                    );
-                })}
-            </div>
-        );
-    };
+        return props => {
+            const style = { ...props.style, width: this.getRowWidth() };
+            return <RowComponent {...{ ...props, style, ...componentProps }} />;
+        };
+    }
 
     renderNoItemsLabel() {
         const { noItemsLabel } = this.props;
@@ -440,9 +375,10 @@ export default class Table extends React.Component {
                         itemCount={this.getDataSize()}
                         itemSize={this.getRowHeight}
                         width={width}
+                        estimatedItemSize={this.getEstimatedItemSize()}
                         {...listProps}
                     >
-                        {this.row}
+                        {this.renderRow()}
                     </List>
                 ) : (
                     this.renderNoItemsLabel()

@@ -1,10 +1,12 @@
 import Table from '../lib/Table';
+import Row from '../lib/Row';
 import dataList from './_data';
 import { action } from '@storybook/addon-actions';
 import Column from '../lib/Column';
 import React from 'react';
 
-const rowRenderer = ({ index, style }) => {
+const rowRenderer = props => {
+    const { index, style } = props;
     if (index % 10 === 0) {
         return (
             <div {...{ style: { ...style, lineHeight: style.height + 'px' } }} className="CustomRow">
@@ -12,6 +14,8 @@ const rowRenderer = ({ index, style }) => {
             </div>
         );
     }
+
+    return <Row {...props} />;
 };
 
 export default () => {
