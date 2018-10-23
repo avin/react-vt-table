@@ -23,15 +23,11 @@ export default class Row extends React.Component {
         /**
          * Function to get cell value
          */
-        getDataRowItem: PropTypes.func,
+        getCellValue: PropTypes.func,
         /**
          * Function to get column width
          */
         getColumnWidth: PropTypes.func,
-        /**
-         * Function to get row data item
-         */
-        getDataRow: PropTypes.func,
         /**
          *  Mouse actions
          */
@@ -39,17 +35,45 @@ export default class Row extends React.Component {
         onDoubleClick: PropTypes.func,
         onMouseOver: PropTypes.func,
         onMouseOut: PropTypes.func,
+        onMouseDown: PropTypes.func,
+        onMouseUp: PropTypes.func,
         onRightClick: PropTypes.func,
     };
     render() {
-        let { rowData, index, rowClassName, style, getDataRowItem, getColumnWidth, children } = this.props;
+        let {
+            rowData,
+            index,
+            rowClassName,
+            style,
+            getCellValue,
+            getColumnWidth,
+            children,
+            onClick,
+            onDoubleClick,
+            onMouseOver,
+            onMouseOut,
+            onMouseDown,
+            onMouseUp,
+            onRightClick,
+        } = this.props;
 
         const evenClassName = index % 2 === 0 ? 'VTRowOdd' : 'VTRowEven';
         const customClassName = rowClassName && rowClassName(index);
 
         let idx = 0;
         return (
-            <div className={classNames('VTRow', evenClassName, customClassName)} style={style}>
+            <div
+                className={classNames('VTRow', evenClassName, customClassName)}
+                style={style}
+                onClick={onClick}
+                onDoubleClick={onDoubleClick}
+                onMouseOver={onMouseOver}
+                onMouseOut={onMouseOut}
+                onContextMenu={onRightClick}
+                onMouseDown={onMouseDown}
+                onMouseUp={onMouseUp}
+                data-row-index={index}
+            >
                 {React.Children.map(children, child => {
                     if (!child) {
                         return null;
@@ -61,7 +85,7 @@ export default class Row extends React.Component {
                     if (cellRenderer) {
                         content = cellRenderer({ dataKey, rowData, columnIndex: idx });
                     } else {
-                        const contentStr = getDataRowItem({ rowData, dataKey });
+                        const contentStr = getCellValue({ rowData, dataKey });
                         content = (
                             <div className="VTCellContent" title={contentStr}>
                                 {contentStr}
@@ -69,24 +93,9 @@ export default class Row extends React.Component {
                         );
                     }
 
-                    const getAction = actionName => {
-                        const action = this.props[actionName];
-                        if (action) {
-                            return event => action(event, { rowIndex: index, dataKey, columnIndex: idx, rowData });
-                        }
-                    };
-
                     idx += 1;
                     return (
-                        <div
-                            className="VTCell"
-                            style={{ minWidth: width, maxWidth: width }}
-                            onClick={getAction('onClick')}
-                            onDoubleClick={getAction('onDoubleClick')}
-                            onMouseOver={getAction('onMouseOver')}
-                            onMouseOut={getAction('onMouseOut')}
-                            onContextMenu={getAction('onRightClick')}
-                        >
+                        <div className="VTCell" style={{ minWidth: width, maxWidth: width }}>
                             {content}
                         </div>
                     );

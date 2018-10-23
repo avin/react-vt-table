@@ -70,7 +70,7 @@ class TableWithSorting extends React.Component {
         this.setState({ sortingKeys: [...sortingKeys] });
     };
 
-    sortIndicatorRender = ({ dataKey, columnIndex }) => {
+    sortIndicatorRender = ({ dataKey }) => {
         const { sortingKeys } = this.state;
         const columnSortingIndex = sortingKeys.findIndex(i => i.key === dataKey);
         const columnSorting = sortingKeys[columnSortingIndex];

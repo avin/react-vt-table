@@ -154,7 +154,7 @@ export default class Table extends React.Component {
         let customColumnsCount = 0;
         let customColumnsWidthSum = 0;
 
-        React.Children.forEach(children, (child, idx) => {
+        React.Children.forEach(children, child => {
             if (!child) {
                 return;
             }
@@ -276,7 +276,7 @@ export default class Table extends React.Component {
         return headerHeight;
     };
 
-    getDataRow = index => {
+    getRowData = index => {
         const { data } = this.props;
         if (Immutable.Iterable.isIterable(data)) {
             return data.get(index);
@@ -285,7 +285,7 @@ export default class Table extends React.Component {
         }
     };
 
-    getDataRowItem = ({ rowData, dataKey }) => {
+    getCellValue = ({ rowData, dataKey }) => {
         if (Immutable.Iterable.isIterable(rowData)) {
             return rowData.get(dataKey);
         } else {
@@ -361,6 +361,20 @@ export default class Table extends React.Component {
         return <Header {...componentProps} />;
     }
 
+    getRowHandler = actionType => {
+        if (!this[`handleRow${actionType}`]) {
+            this[`handleRow${actionType}`] = event => {
+                const action = this.props[`onRow${actionType}`];
+                if (action) {
+                    const rowIndex = Number(event.currentTarget.dataset.rowIndex);
+                    const rowData = this.getRowData(rowIndex);
+                    action(event, { rowIndex, rowData });
+                }
+            };
+        }
+        return this[`handleRow${actionType}`];
+    };
+
     renderRow() {
         const { rowClassName, children, rowRenderer } = this.props;
 
@@ -368,21 +382,22 @@ export default class Table extends React.Component {
             children: children,
             rowClassName,
             getRowWidth: this.getRowWidth,
-            getDataRowItem: this.getDataRowItem,
+            getCellValue: this.getCellValue,
             getColumnWidth: this.getColumnWidth,
-            getDataRow: this.getDataRow,
-            onClick: this.props.onRowClick,
-            onDoubleClick: this.props.onRowDoubleClick,
-            onMouseOver: this.props.onRowMouseOver,
-            onMouseOut: this.props.onRowMouseOut,
-            onRightClick: this.props.onRowRightClick,
+            onClick: this.getRowHandler('Click'),
+            onDoubleClick: this.getRowHandler('DoubleClick'),
+            onMouseOver: this.getRowHandler('MouseOver'),
+            onMouseOut: this.getRowHandler('MouseOut'),
+            onMouseDown: this.getRowHandler('MouseDown'),
+            onMouseUp: this.getRowHandler('MouseUp'),
+            onRightClick: this.getRowHandler('RightClick'),
         };
 
         const RowComponent = rowRenderer ? rowRenderer : Row;
 
         return props => {
             const style = { ...props.style, width: this.getRowWidth() };
-            const rowData = this.getDataRow(props.index);
+            const rowData = this.getRowData(props.index);
             return <RowComponent {...{ ...props, style, rowData, ...componentProps }} />;
         };
     }
@@ -399,7 +414,6 @@ export default class Table extends React.Component {
         return (
             <div
                 className={classNames('VTContainer', className)}
-                ref={i => (this.containerEl = i)}
                 style={{ paddingTop: this.getHeaderHeight(), width: width, height: height - this.getHeaderHeight() }}
             >
                 {this.renderHeader()}
@@ -407,7 +421,6 @@ export default class Table extends React.Component {
                 {this.getDataSize() ? (
                     <List
                         ref={i => (this.list = i)}
-                        innerRef={i => (this.listInnerEl = i)}
                         outerRef={i => (this.listOuterEl = i)}
                         className="VTList"
                         height={height - this.getHeaderHeight()}

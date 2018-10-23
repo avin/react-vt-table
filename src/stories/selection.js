@@ -67,7 +67,7 @@ class TableWithSelection extends React.Component {
                     width={800}
                     height={600}
                     data={dataList}
-                    onRowClick={this.handleClickRow}
+                    onRowMouseDown={this.handleClickRow}
                     rowClassName={this.getRowClassName}
                 >
                     <Column label="c1" dataKey="c1" />

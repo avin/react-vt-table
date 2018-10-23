@@ -30,7 +30,7 @@ class ChangeColumnsTable extends React.Component {
                     width={800}
                     height={600}
                     data={dataList}
-                    rowHeight={i => Math.floor(20 + Math.random() * 60)}
+                    rowHeight={() => Math.floor(20 + Math.random() * 60)}
                     onRowClick={action('row clicked')}
                     disableHeader={false}
                 >

@@ -1,12 +1,16 @@
 {
     "name": "react-vt-table",
-    "version": "0.3.12",
+    "version": "0.3.13",
     "main": "dist/index.js",
     "module": "dist/index.js",
     "files": [
         "dist",
         "README.md"
     ],
+    "engines": {
+        "node": ">=8",
+        "npm": ">=5"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/avin/react-vt-table"
@@ -34,7 +38,6 @@
         }
     },
     "scripts": {
-        "build": "npm run build:dist && npm run build:demo",
         "build:demo": "npm run clean:demo && build-storybook -o demo",
         "build:dist": "npm run clean:dist && cross-env NODE_ENV=production babel src/lib --out-dir dist --copy-files --ignore __tests__",
         "clean:demo": "rimraf demo",
@@ -42,13 +45,14 @@
         "deploy": "gh-pages -d demo -r https://github.com/avin/react-vt-table",
         "postpublish": "npm run deploy",
         "precommit": "lint-staged",
-        "prepare": "npm run build",
+        "prepare": "npm run build:dist",
+        "predeploy": "npm run build:demo",
         "prettier": "prettier --write '{src}/**/*.js'",
         "storybook": "start-storybook -p 9009",
-        "test": "react-scripts test",
-        "build-storybook": "build-storybook"
+        "test": "react-scripts test"
     },
     "peerDependencies": {
+        "prop-types": "^15.5.4",
         "react": "^15.0.0 || ^16.0.0",
         "react-dom": "^15.0.0 || ^16.0.0"
     },
