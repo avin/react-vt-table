@@ -28,13 +28,13 @@ export default () => {
                 data={dataList}
                 rowRenderer={rowRenderer}
                 onRowClick={action('row clicked')}
-                dynamicColumnWidth={false}
+                dynamicColumnWidth={true}
                 disableHeader={false}
             >
                 <Column label="c1" dataKey="c1" width={500} />
                 <Column label="c2" dataKey="c2" />
                 <Column label="c3" dataKey="c3" />
-                <Column label="c4" dataKey="c4" />
+                <Column label="c4" dataKey="c4" width={60} />
             </Table>
         </div>
     );

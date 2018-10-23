@@ -42,7 +42,7 @@ export default class Row extends React.Component {
         onRightClick: PropTypes.func,
     };
     render() {
-        let { rowData, index, rowClassName, style, getDataRow, getDataRowItem, getColumnWidth, children } = this.props;
+        let { rowData, index, rowClassName, style, getDataRowItem, getColumnWidth, children } = this.props;
 
         const evenClassName = index % 2 === 0 ? 'VTRowOdd' : 'VTRowEven';
         const customClassName = rowClassName && rowClassName(index);

@@ -281,7 +281,7 @@ export default class Table extends React.Component {
 
     getRowWidth = () => {
         const { customColumnsWidth } = this.state;
-        return customColumnsWidth.reduce((result, item) => result + item, 0);
+        return customColumnsWidth.reduce((result, item, idx) => result + this.getColumnWidth(idx), 0);
     };
 
     handleResizeColumn = (columnIndex, diff, dataKey) => {
