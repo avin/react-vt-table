@@ -1,6 +1,6 @@
 {
     "name": "react-vt-table",
-    "version": "0.3.8",
+    "version": "0.3.10",
     "main": "dist/index.js",
     "module": "dist/index.js",
     "files": [
@@ -42,7 +42,7 @@
         "deploy": "gh-pages -d demo -r https://github.com/avin/react-vt-table",
         "postpublish": "npm run deploy",
         "precommit": "lint-staged",
-        "prepublish": "npm run build",
+        "prepare": "npm run build",
         "prettier": "prettier --write '{src}/**/*.js'",
         "storybook": "start-storybook -p 9009",
         "test": "react-scripts test",
