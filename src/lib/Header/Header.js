@@ -24,18 +24,20 @@ export default class Header extends React.Component {
 
     render() {
         const { children, height, getHeaderHeight, getColumnWidth, onResizeColumn, sortIndicatorRenderer } = this.props;
+        let idx = 0;
         return (
             <div className="VTHeader" style={{ height: getHeaderHeight() }} ref={i => (this.headerEl = i)}>
-                {React.Children.map(children, (child, idx) => {
+                {React.Children.map(children, child => {
+                    let columnIndex = idx;
                     if (!child) {
                         return null;
                     }
                     let { label, dataKey, columnHeaderCellRenderer } = child.props;
-                    const width = getColumnWidth(idx);
+                    const width = getColumnWidth(columnIndex);
 
                     let content;
                     if (columnHeaderCellRenderer) {
-                        content = columnHeaderCellRenderer({ label, dataKey, columnIndex: idx });
+                        content = columnHeaderCellRenderer({ label, dataKey, columnIndex });
                     } else {
                         content = (
                             <div className="VTCellContent" title={label} style={{ lineHeight: height + 'px' }}>
@@ -47,9 +49,11 @@ export default class Header extends React.Component {
                     const getAction = actionName => {
                         const action = this.props[actionName];
                         if (action) {
-                            return event => action(event, { dataKey, columnIndex: idx });
+                            return event => action(event, { dataKey, columnIndex });
                         }
                     };
+
+                    idx += 1;
 
                     return (
                         <div
@@ -63,9 +67,9 @@ export default class Header extends React.Component {
                         >
                             {content}
 
-                            <ColumnResizer onResizeColumn={diff => onResizeColumn(idx, diff, dataKey)} />
+                            <ColumnResizer onResizeColumn={diff => onResizeColumn(columnIndex, diff, dataKey)} />
 
-                            {sortIndicatorRenderer({ dataKey: child.props.dataKey, columnIndex: idx })}
+                            {sortIndicatorRenderer({ dataKey: child.props.dataKey, columnIndex })}
                         </div>
                     );
                 })}

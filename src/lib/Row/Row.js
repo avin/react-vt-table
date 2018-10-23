@@ -47,9 +47,10 @@ export default class Row extends React.Component {
         const evenClassName = index % 2 === 0 ? 'VTRowOdd' : 'VTRowEven';
         const customClassName = rowClassName && rowClassName(index);
 
+        let idx = 0;
         return (
             <div className={classNames('VTRow', evenClassName, customClassName)} style={style}>
-                {React.Children.map(children, (child, idx) => {
+                {React.Children.map(children, child => {
                     if (!child) {
                         return null;
                     }
@@ -75,6 +76,7 @@ export default class Row extends React.Component {
                         }
                     };
 
+                    idx += 1;
                     return (
                         <div
                             className="VTCell"
