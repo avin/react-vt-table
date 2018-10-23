@@ -58,6 +58,8 @@ or create your own using existing one
 | onRowDoubleClick      | Func               |           | Double Click Mouse action on table row. <br>Function params: `(event, { dataKey, columnIndex })`.                             |
 | onRowMouseOver        | Func               |           | Mouse Over action on table row. <br>Function params: `(event, { dataKey, columnIndex })`.                                     |
 | onRowMouseOut         | Func               |           | Mouse Out action on table row. <br>Function params: `(event, { dataKey, columnIndex })`.                                      |
+| onRowMouseDown        | Func               |           | Mouse Down action on table row. <br>Function params: `(event, { dataKey, columnIndex })`.                                     |
+| onRowMouseUp          | Func               |           | Mouse Up action on table row. <br>Function params: `(event, { dataKey, columnIndex })`.                                       |
 | onRowRightClick       | Func               |           | Right Click Mouse action on table row. <br>Function params: `(event, { dataKey, columnIndex })`.                              |
 | onScroll              | Func               |           | Action on table scroll. <br>Function params: See [React-Window's docs](https://react-window.now.sh/#/api/FixedSizeList).      |
 | onResizeColumn        | Func               |           | Action on change column width. <br>Function params: `({ dataKey, columnIndex, resizeDiff, newWidth })`.                       |
