@@ -7,6 +7,16 @@ import Header from '../Header/Header';
 import Row from '../Row/Row';
 import Column from '../Column/Column';
 
+const countChildren = children => {
+    let count = 0;
+    React.Children.forEach(children, child => {
+        if (child) {
+            count += 1;
+        }
+    });
+    return count;
+};
+
 export default class Table extends React.Component {
     state = {
         customColumnsWidth: [],
@@ -137,8 +147,7 @@ export default class Table extends React.Component {
         noItemsLabel: 'No items',
     };
 
-    constructor(props) {
-        super(props);
+    calculateCustomColumnsWidth() {
         const { children, overflowWidth, width, minColumnWidth, dynamicColumnWidth } = this.props;
 
         let customColumnsWidth = [];
@@ -171,7 +180,22 @@ export default class Table extends React.Component {
                 return item;
             });
         }
-        this.state.customColumnsWidth = customColumnsWidth;
+
+        return customColumnsWidth;
+    }
+
+    componentDidUpdate(prevProps) {
+        if (countChildren(prevProps.children) !== countChildren(this.props.children)) {
+            this.setState({
+                customColumnsWidth: this.calculateCustomColumnsWidth(),
+            });
+        }
+    }
+
+    constructor(props) {
+        super(props);
+
+        this.state.customColumnsWidth = this.calculateCustomColumnsWidth();
     }
 
     getColumnsCount() {
