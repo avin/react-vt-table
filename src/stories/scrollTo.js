@@ -9,16 +9,25 @@ function randomBetween(min, max) {
 }
 
 class TableWithScrollButton extends React.Component {
-    scrollToRandom = () => {
+    scrollToRandomElement = () => {
         this.table.scrollToItem(randomBetween(0, dataList.size));
+    };
+
+    scrollToRandomOffset = () => {
+        const scrollHeight = this.table.listOuter.scrollHeight;
+        this.table.scrollTo(randomBetween(0, scrollHeight));
     };
 
     render() {
         return (
             <div className="App">
                 <div className="DescriptionBlock">
-                    <button type="button" onClick={this.scrollToRandom}>
+                    <button type="button" onClick={this.scrollToRandomElement}>
                         Scroll to random element
+                    </button>
+
+                    <button type="button" onClick={this.scrollToRandomOffset}>
+                        Scroll to random offset
                     </button>
                 </div>
 

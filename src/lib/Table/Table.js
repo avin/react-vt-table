@@ -214,8 +214,8 @@ export default class Table extends React.Component {
         const { disableHeader } = this.props;
 
         if (!disableHeader) {
-            this.listOuterEl &&
-                this.listOuterEl.addEventListener('scroll', e => {
+            this.listOuter &&
+                this.listOuter.addEventListener('scroll', e => {
                     this.header.headerEl.scrollLeft = e.target.scrollLeft;
                 });
         }
@@ -328,13 +328,13 @@ export default class Table extends React.Component {
         onResizeColumn({ dataKey, columnIndex, resizeDiff: diff, newWidth });
     };
 
-    scrollTo = (...args) => {
+    scrollTo(...args) {
         this.list.scrollTo(...args);
-    };
+    }
 
-    scrollToItem = (...args) => {
+    scrollToItem(...args) {
         this.list.scrollToItem(...args);
-    };
+    }
 
     renderHeader() {
         const { children, disableHeader, headerHeight, sortIndicatorRenderer } = this.props;
@@ -421,7 +421,8 @@ export default class Table extends React.Component {
                 {this.getDataSize() ? (
                     <List
                         ref={i => (this.list = i)}
-                        outerRef={i => (this.listOuterEl = i)}
+                        innerRef={i => (this.listInner = i)}
+                        outerRef={i => (this.listOuter = i)}
                         className="VTList"
                         height={height - this.getHeaderHeight()}
                         itemCount={this.getDataSize()}
