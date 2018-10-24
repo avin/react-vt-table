@@ -47,8 +47,12 @@
 .VTHeaderCell {
     flex-grow: 1;
     box-sizing: border-box;
-
     position: relative;
+
+    -ms-flex-align: center;
+    align-items: center;
+    display: -ms-flexbox;
+    display: flex;
 }
 
 .VTHeaderCell {
@@ -58,11 +62,6 @@
 .VTCell {
     border-right: 1px solid #e1e8ed;
     border-bottom: 1px solid #ced9e0;
-
-    -ms-flex-align: center;
-    align-items: center;
-    display: -ms-flexbox;
-    display: flex;
 }
 
 .VTHeader {

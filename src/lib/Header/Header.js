@@ -23,7 +23,7 @@ export default class Header extends React.Component {
     };
 
     render() {
-        const { children, height, getHeaderHeight, getColumnWidth, onResizeColumn, sortIndicatorRenderer } = this.props;
+        const { children, getHeaderHeight, getColumnWidth, onResizeColumn, sortIndicatorRenderer } = this.props;
         let idx = 0;
         return (
             <div className="VTHeader" style={{ height: getHeaderHeight() }} ref={i => (this.headerEl = i)}>
@@ -40,7 +40,7 @@ export default class Header extends React.Component {
                         content = columnHeaderCellRenderer({ label, dataKey, columnIndex });
                     } else {
                         content = (
-                            <div className="VTCellContent" title={label} style={{ lineHeight: height + 'px' }}>
+                            <div className="VTCellContent" title={label}>
                                 {label}
                             </div>
                         );
