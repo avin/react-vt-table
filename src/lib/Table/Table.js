@@ -409,7 +409,7 @@ export default class Table extends React.Component {
     }
 
     render() {
-        const { height, width, listProps, className } = this.props;
+        const { height, width, listProps, className, onScroll } = this.props;
 
         return (
             <div
@@ -427,6 +427,7 @@ export default class Table extends React.Component {
                         itemCount={this.getDataSize()}
                         itemSize={this.getRowHeight}
                         width={width}
+                        onScroll={onScroll}
                         estimatedItemSize={this.getEstimatedItemSize()}
                         {...listProps}
                     >
