@@ -329,11 +329,11 @@ export default class Table extends React.Component {
     };
 
     scrollTo(...args) {
-        this.list.scrollTo(...args);
+        this.list && this.list.scrollTo(...args);
     }
 
     scrollToItem(...args) {
-        this.list.scrollToItem(...args);
+        this.list && this.list.scrollToItem(...args);
     }
 
     renderHeader() {
