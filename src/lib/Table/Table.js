@@ -328,13 +328,13 @@ export default class Table extends React.Component {
         onResizeColumn({ dataKey, columnIndex, resizeDiff: diff, newWidth });
     };
 
-    scrollTo(...args) {
+    scrollTo = (...args) => {
         this.list.scrollTo(...args);
-    }
+    };
 
-    scrollToItem(...args) {
+    scrollToItem = (...args) => {
         this.list.scrollToItem(...args);
-    }
+    };
 
     renderHeader() {
         const { children, disableHeader, headerHeight, sortIndicatorRenderer } = this.props;
