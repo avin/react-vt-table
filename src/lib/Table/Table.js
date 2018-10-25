@@ -147,6 +147,8 @@ export default class Table extends React.Component {
         noItemsLabel: 'No items',
     };
 
+    rowWidth = null;
+
     calculateCustomColumnsWidth() {
         const { children, overflowWidth, width, minColumnWidth, dynamicColumnWidth } = this.props;
 
@@ -189,6 +191,7 @@ export default class Table extends React.Component {
             this.setState({
                 customColumnsWidth: this.calculateCustomColumnsWidth(),
             });
+            this.rowWidth = null;
         }
     }
 
@@ -305,7 +308,10 @@ export default class Table extends React.Component {
 
     getRowWidth = () => {
         const { customColumnsWidth } = this.state;
-        return customColumnsWidth.reduce((result, item, idx) => result + this.getColumnWidth(idx), 0);
+        if (this.rowWidth === null) {
+            this.rowWidth = customColumnsWidth.reduce((result, item, idx) => result + this.getColumnWidth(idx), 0);
+        }
+        return this.rowWidth;
     };
 
     handleResizeColumn = (columnIndex, diff, dataKey) => {
@@ -322,6 +328,7 @@ export default class Table extends React.Component {
         this.setState({
             customColumnsWidth: newCustomColumnsWidth,
         });
+        this.rowWidth = null;
 
         this.list && this.list.resetAfterIndex(0);
 
