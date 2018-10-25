@@ -186,12 +186,15 @@ export default class Table extends React.Component {
         return customColumnsWidth;
     }
 
+    componentWillUpdate() {
+        this.rowWidth = null;
+    }
+
     componentDidUpdate(prevProps) {
         if (countChildren(prevProps.children) !== countChildren(this.props.children)) {
             this.setState({
                 customColumnsWidth: this.calculateCustomColumnsWidth(),
             });
-            this.rowWidth = null;
         }
     }
 
@@ -328,7 +331,6 @@ export default class Table extends React.Component {
         this.setState({
             customColumnsWidth: newCustomColumnsWidth,
         });
-        this.rowWidth = null;
 
         this.list && this.list.resetAfterIndex(0);
 
