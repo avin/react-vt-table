@@ -284,7 +284,7 @@ export default class Table extends React.Component {
 
     getRowData = index => {
         const { data } = this.props;
-        if (Immutable.Iterable.isIterable(data)) {
+        if (Immutable && Immutable.Iterable.isIterable(data)) {
             return data.get(index);
         } else {
             return data[index];
@@ -292,7 +292,7 @@ export default class Table extends React.Component {
     };
 
     getCellValue = ({ rowData, dataKey }) => {
-        if (Immutable.Iterable.isIterable(rowData)) {
+        if (Immutable && Immutable.Iterable.isIterable(rowData)) {
             return rowData.get(dataKey);
         } else {
             return rowData[dataKey];
@@ -302,7 +302,7 @@ export default class Table extends React.Component {
     getDataSize = () => {
         const { data } = this.props;
 
-        if (Immutable.Iterable.isIterable(data)) {
+        if (Immutable && Immutable.Iterable.isIterable(data)) {
             return data.size;
         } else {
             return data.length;

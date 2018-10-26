@@ -1,6 +1,6 @@
 {
     "name": "react-vt-table",
-    "version": "0.3.20",
+    "version": "0.4.0",
     "main": "dist/index.js",
     "module": "dist/index.js",
     "files": [
@@ -53,6 +53,7 @@
     },
     "peerDependencies": {
         "prop-types": "^15.5.4",
+        "immutable": ">=4.0.0",
         "react": "^15.0.0 || ^16.0.0",
         "react-dom": "^15.0.0 || ^16.0.0"
     },
@@ -72,11 +73,11 @@
         "react": "^16.5.2",
         "react-dom": "^16.5.2",
         "react-scripts": "2.0.5",
-        "rimraf": "^2.6.2"
+        "rimraf": "^2.6.2",
+        "immutable": "^4.0.0-rc.10"
     },
     "dependencies": {
         "classnames": "^2.2.6",
-        "immutable": "^4.0.0-rc.10",
         "react-draggable": "^3.0.5",
         "react-window": "^1.2.1"
     }
