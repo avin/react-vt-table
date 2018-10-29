@@ -417,8 +417,19 @@ export default class Table extends React.Component {
         return <div className="VTNoItemsLabel">{noItemsLabel}</div>;
     }
 
+    handleScroll = ({ scrollDirection, scrollOffset, scrollUpdateWasRequested }) => {
+        const { onScroll } = this.props;
+
+        //react-window fires onScroll every time on mount, fixing it using this condition
+        if (!onScroll || (scrollDirection === 'forward' && scrollOffset === 0 && !scrollUpdateWasRequested)) {
+            return;
+        }
+
+        onScroll({ scrollDirection, scrollOffset, scrollUpdateWasRequested });
+    };
+
     render() {
-        const { height, width, listProps, className, onScroll } = this.props;
+        const { height, width, listProps, className } = this.props;
 
         return (
             <div
@@ -437,7 +448,7 @@ export default class Table extends React.Component {
                         itemCount={this.getDataSize()}
                         itemSize={this.getRowHeight}
                         width={width}
-                        onScroll={onScroll}
+                        onScroll={this.handleScroll}
                         estimatedItemSize={this.getEstimatedItemSize()}
                         {...listProps}
                     >
