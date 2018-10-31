@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-export default class Row extends React.Component {
+export default class Row extends React.PureComponent {
     static propTypes = {
         /**
          * Row index number
@@ -40,11 +40,12 @@ export default class Row extends React.Component {
         onRightClick: PropTypes.func,
     };
     render() {
+        let { data, index, style } = this.props;
+
         let {
-            rowData,
-            index,
+            dataList,
+            getRowData,
             rowClassName,
-            style,
             getCellValue,
             getColumnWidth,
             children,
@@ -55,10 +56,12 @@ export default class Row extends React.Component {
             onMouseDown,
             onMouseUp,
             onRightClick,
-        } = this.props;
+        } = data.rowProps;
 
         const evenClassName = index % 2 === 0 ? 'VTRowOdd' : 'VTRowEven';
         const customClassName = rowClassName && rowClassName(index);
+
+        const rowData = getRowData(index, dataList);
 
         let idx = 0;
         return (

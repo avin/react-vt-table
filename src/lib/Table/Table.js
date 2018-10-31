@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import Header from '../Header/Header';
 import Row from '../Row/Row';
 import Column from '../Column/Column';
+import memoize from 'memoize-one';
 
 const countChildren = children => {
     let count = 0;
@@ -16,6 +17,11 @@ const countChildren = children => {
     });
     return count;
 };
+
+const getItemData = memoize((dataList, rowProps) => ({
+    dataList,
+    rowProps,
+}));
 
 export default class Table extends React.Component {
     state = {
@@ -227,7 +233,7 @@ export default class Table extends React.Component {
     }
 
     componentDidMount() {
-        const { disableHeader, list } = this.props;
+        const { disableHeader } = this.props;
 
         if (!disableHeader) {
             this.listOuter &&
@@ -292,8 +298,8 @@ export default class Table extends React.Component {
         return headerHeight;
     };
 
-    getRowData = index => {
-        const { data } = this.props;
+    getRowData = (index, data) => {
+        data = data || this.props.data;
         if (Immutable && Immutable.Iterable.isIterable(data)) {
             return data.get(index);
         } else {
@@ -395,30 +401,9 @@ export default class Table extends React.Component {
     };
 
     renderRow() {
-        const { rowClassName, children, rowRenderer } = this.props;
+        const { rowRenderer } = this.props;
 
-        const componentProps = {
-            children: children,
-            rowClassName,
-            getRowWidth: this.getRowWidth,
-            getCellValue: this.getCellValue,
-            getColumnWidth: this.getColumnWidth,
-            onClick: this.getRowHandler('Click'),
-            onDoubleClick: this.getRowHandler('DoubleClick'),
-            onMouseOver: this.getRowHandler('MouseOver'),
-            onMouseOut: this.getRowHandler('MouseOut'),
-            onMouseDown: this.getRowHandler('MouseDown'),
-            onMouseUp: this.getRowHandler('MouseUp'),
-            onRightClick: this.getRowHandler('RightClick'),
-        };
-
-        const RowComponent = rowRenderer ? rowRenderer : Row;
-
-        return props => {
-            const style = { ...props.style, width: this.getRowWidth() };
-            const rowData = this.getRowData(props.index);
-            return <RowComponent {...{ ...props, style, rowData, ...componentProps }} />;
-        };
+        return rowRenderer ? rowRenderer : Row;
     }
 
     renderNoItemsLabel() {
@@ -443,7 +428,25 @@ export default class Table extends React.Component {
     };
 
     render() {
-        const { height, width, listProps, className } = this.props;
+        const { height, width, listProps, className, data, rowClassName, children } = this.props;
+
+        const rowProps = {
+            children: children,
+            rowClassName,
+            getRowData: this.getRowData,
+            getRowWidth: this.getRowWidth,
+            getCellValue: this.getCellValue,
+            getColumnWidth: this.getColumnWidth,
+            onClick: this.getRowHandler('Click'),
+            onDoubleClick: this.getRowHandler('DoubleClick'),
+            onMouseOver: this.getRowHandler('MouseOver'),
+            onMouseOut: this.getRowHandler('MouseOut'),
+            onMouseDown: this.getRowHandler('MouseDown'),
+            onMouseUp: this.getRowHandler('MouseUp'),
+            onRightClick: this.getRowHandler('RightClick'),
+        };
+
+        const itemData = getItemData(data, rowProps);
 
         return (
             <div
@@ -461,6 +464,7 @@ export default class Table extends React.Component {
                         height={height - this.getHeaderHeight()}
                         itemCount={this.getDataSize()}
                         itemSize={this.getRowHeight}
+                        itemData={itemData}
                         width={width}
                         onScroll={this.handleScroll}
                         estimatedItemSize={this.getEstimatedItemSize()}
