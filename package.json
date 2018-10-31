@@ -52,33 +52,33 @@
         "test": "react-scripts test"
     },
     "peerDependencies": {
-        "prop-types": "^15.5.4",
         "immutable": ">=4.0.0",
+        "prop-types": "^15.5.4",
         "react": "^15.0.0 || ^16.0.0",
         "react-dom": "^15.0.0 || ^16.0.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.1.2",
         "@babel/core": "^7.1.2",
-        "@storybook/addon-actions": "^4.0.0-rc.0",
-        "@storybook/addon-links": "^4.0.0-rc.0",
-        "@storybook/addons": "^4.0.0-rc.0",
-        "@storybook/react": "^4.0.0-rc.0",
+        "@storybook/addon-actions": "^4.0.2",
+        "@storybook/addon-links": "^4.0.2",
+        "@storybook/addons": "^4.0.2",
+        "@storybook/react": "^4.0.2",
         "babel-loader": "^8.0.4",
         "cross-env": "^5.2.0",
         "gh-pages": "^2.0.1",
         "husky": "^1.1.2",
+        "immutable": "^4.0.0-rc.10",
         "lint-staged": "^7.3.0",
         "prop-types": "^15.6.2",
         "react": "^16.5.2",
         "react-dom": "^16.5.2",
         "react-scripts": "2.0.5",
-        "rimraf": "^2.6.2",
-        "immutable": "^4.0.0-rc.10"
+        "rimraf": "^2.6.2"
     },
     "dependencies": {
         "classnames": "^2.2.6",
         "react-draggable": "^3.0.5",
-        "react-window": "^1.2.1"
+        "react-window": "^1.2.2"
     }
 }
