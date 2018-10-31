@@ -1,6 +1,6 @@
 # React-VT-Table
 
-Table realisation based on `react-window` library.
+Table realisation based on [react-window](https://github.com/bvaughn/react-window) library.
 
 ## Features
 
@@ -101,20 +101,28 @@ Use `Row` component only if you want to low modify your table rows. (See example
 
 #### Props
 
-| Property       | Type   | Required? | Description                                                                          |
-| :------------- | :----- | :-------: | :----------------------------------------------------------------------------------- |
-| index          | Number |           | Row number                                                                           |
-| style          | Object |           | Row style                                                                            |
-| columns        | array  |           | Table columns array                                                                  |
-| rowClassName   | Func   |           | Row className determine function. <br>Function params: `(rowIndex)`.                 |
-| getDataRowItem | Func   |           | Function to get cell value. <br>Function params: `({rowData, dataKey})`.             |
-| getColumnWidth | Func   |           | Function to get column width. <br>Function params: `(columnIndex)`.                  |
-| getDataRow     | Func   |           | Function to get row data item. <br>Function params: `(rowIndex)`.                    |
-| onClick        | Func   |           | onClick row handler. <br>Function params: `(event, { dataKey, columnIndex })`.       |
-| onDoubleClick  | Func   |           | onDoubleClick row handler. <br>Function params: `(event, { dataKey, columnIndex })`. |
-| onMouseOver    | Func   |           | onMouseOver row handler. <br>Function params: `(event, { dataKey, columnIndex })`.   |
-| onMouseOut     | Func   |           | onMouseOut row handler. <br>Function params: `(event, { dataKey, columnIndex })`.    |
-| onRightClick   | Func   |           | onRightClick row handler. <br>Function params: `(event, { dataKey, columnIndex })`.  |
+| Property | Type   | Required? | Description                                                                                                                       |
+| :------- | :----- | :-------: | :-------------------------------------------------------------------------------------------------------------------------------- |
+| index    | Number |           | Row number                                                                                                                        |
+| style    | Object |           | Row style                                                                                                                         |
+| data     | Object |           | Additional row data `({dataList, rowProps})` where `dataList` is table data and rowProps is additional row properties (see below) |
+
+#### Additional row properties
+
+Additional row properties are contained in row `props.data.rowProps`
+
+| Property       | Type  | Required? | Description                                                                          |
+| :------------- | :---- | :-------: | :----------------------------------------------------------------------------------- |
+| columns        | array |           | Table columns array                                                                  |
+| rowClassName   | Func  |           | Row className determine function. <br>Function params: `(rowIndex)`.                 |
+| getDataRowItem | Func  |           | Function to get cell value. <br>Function params: `({rowData, dataKey})`.             |
+| getColumnWidth | Func  |           | Function to get column width. <br>Function params: `(columnIndex)`.                  |
+| getDataRow     | Func  |           | Function to get row data item. <br>Function params: `(rowIndex)`.                    |
+| onClick        | Func  |           | onClick row handler. <br>Function params: `(event, { dataKey, columnIndex })`.       |
+| onDoubleClick  | Func  |           | onDoubleClick row handler. <br>Function params: `(event, { dataKey, columnIndex })`. |
+| onMouseOver    | Func  |           | onMouseOver row handler. <br>Function params: `(event, { dataKey, columnIndex })`.   |
+| onMouseOut     | Func  |           | onMouseOut row handler. <br>Function params: `(event, { dataKey, columnIndex })`.    |
+| onRightClick   | Func  |           | onRightClick row handler. <br>Function params: `(event, { dataKey, columnIndex })`.  |
 
 ## License
 
