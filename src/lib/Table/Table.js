@@ -22,6 +22,8 @@ export default class Table extends React.Component {
         customColumnsWidth: [],
     };
 
+    autoScrolling = this.props.autoScroll;
+
     static propTypes = {
         /**
          * Table width
@@ -126,6 +128,10 @@ export default class Table extends React.Component {
          */
         disableHeader: PropTypes.bool,
         /**
+         * Auto scroll to list bottom
+         */
+        autoScroll: PropTypes.bool,
+        /**
          * Optional custom CSS class name to attach to root container element
          */
         className: PropTypes.string,
@@ -196,6 +202,10 @@ export default class Table extends React.Component {
                 customColumnsWidth: this.calculateCustomColumnsWidth(),
             });
         }
+
+        if (this.autoScrolling && this.props.autoScroll && this.props.data) {
+            this.scrollToItem(this.props.data.size);
+        }
     }
 
     constructor(props) {
@@ -217,7 +227,7 @@ export default class Table extends React.Component {
     }
 
     componentDidMount() {
-        const { disableHeader } = this.props;
+        const { disableHeader, list } = this.props;
 
         if (!disableHeader) {
             this.listOuter &&
@@ -421,11 +431,15 @@ export default class Table extends React.Component {
         const { onScroll } = this.props;
 
         //react-window fires onScroll every time on mount, fixing it using this condition
-        if (!onScroll || (scrollDirection === 'forward' && scrollOffset === 0 && !scrollUpdateWasRequested)) {
-            return;
+        if (!(!onScroll || (scrollDirection === 'forward' && scrollOffset === 0 && !scrollUpdateWasRequested))) {
+            onScroll({ scrollDirection, scrollOffset, scrollUpdateWasRequested });
         }
 
-        onScroll({ scrollDirection, scrollOffset, scrollUpdateWasRequested });
+        if (this.props.autoScroll && !scrollUpdateWasRequested) {
+            const scrollHeight = this.listOuter.scrollHeight;
+            const clientHeight = this.listOuter.offsetHeight;
+            this.autoScrolling = scrollHeight === clientHeight + scrollOffset;
+        }
     };
 
     render() {

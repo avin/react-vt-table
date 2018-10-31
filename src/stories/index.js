@@ -7,6 +7,7 @@ import selection from './selection';
 import rowRenderer from './rowRenderer';
 import scrollTo from './scrollTo';
 import changeColumns from './changeColumns';
+import autoScroll from './autoScroll';
 
 storiesOf('Table', module)
     .add('Simple table', simple)
@@ -14,4 +15,5 @@ storiesOf('Table', module)
     .add('Table with selection', selection)
     .add('Scroll to item', scrollTo)
     .add('Custom row renderer', rowRenderer)
-    .add('Change columns', changeColumns);
+    .add('Change columns', changeColumns)
+    .add('Auto scroll', autoScroll);

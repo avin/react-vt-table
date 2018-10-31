@@ -5,8 +5,10 @@ Table realisation based on `react-window` library.
 ## Features
 
 -   Efficiently rendering large tables.
--   Resize columns.
--   Easy to add your own sorting and selecting mechanisms.
+-   Allow custom renderers for row, cell, and header.
+-   Built-in resize columns.
+-   Built-in auto-scrolling.
+-   Easy to add your own sorting and selecting mechanisms (see examples).
 -   Works with Immutable.Iterable data lists or native arrays of objects.
 
 ## Installation
@@ -70,6 +72,7 @@ or create your own using existing one
 | listProps             | Object             |           | Props for inner `react-window` list component. @see See [React-Windows docs](https://react-window.now.sh/#/api/FixedSizeList) |
 | noItemsLabel          | Node               |           | No items in data list label.                                                                                                  |
 | disableHeader         | Bool               |           | Hide table header row.                                                                                                        |
+| autoScroll            | Bool               |           | Auto scroll to list bottom.                                                                                                   |
 | className             | String             |           | Optional custom CSS class name to attach to root container element.                                                           |
 | id                    | String             |           | Optional custom id to attach to root container element.                                                                       |
 
