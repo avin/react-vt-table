@@ -109,7 +109,7 @@ Use `Row` component only if you want to low modify your table rows. (See example
 
 #### Additional row properties
 
-Additional row properties are contained in row `props.data.rowProps`
+Additional row properties are contained in row's `props.data.rowProps`
 
 | Property       | Type  | Required? | Description                                                                          |
 | :------------- | :---- | :-------: | :----------------------------------------------------------------------------------- |

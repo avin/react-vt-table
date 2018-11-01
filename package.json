@@ -1,6 +1,6 @@
 {
     "name": "react-vt-table",
-    "version": "0.6.1",
+    "version": "0.6.2",
     "main": "dist/index.js",
     "module": "dist/index.js",
     "files": [
@@ -52,7 +52,6 @@
         "test": "react-scripts test"
     },
     "peerDependencies": {
-        "immutable": ">=4.0.0",
         "prop-types": "^15.5.4",
         "react": "^15.0.0 || ^16.0.0",
         "react-dom": "^15.0.0 || ^16.0.0"
