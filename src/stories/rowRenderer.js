@@ -6,10 +6,14 @@ import Column from '../lib/Column';
 import React from 'react';
 
 const rowRenderer = props => {
-    const { index, style } = props;
+    const { index, style, data } = props;
+    const { getRowWidth } = data.rowProps;
     if (index % 10 === 0) {
         return (
-            <div {...{ style: { ...style, lineHeight: style.height + 'px' } }} className="CustomRow">
+            <div
+                {...{ style: { ...style, width: getRowWidth(), lineHeight: style.height + 'px' } }}
+                className="CustomRow"
+            >
                 This is #{index / 10 + 1} row rendered by custom renderer!
             </div>
         );

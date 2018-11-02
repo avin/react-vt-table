@@ -23,7 +23,14 @@ export default class Header extends React.Component {
     };
 
     render() {
-        const { children, getHeaderHeight, getColumnWidth, onResizeColumn, sortIndicatorRenderer } = this.props;
+        const {
+            children,
+            getHeaderHeight,
+            getColumnWidth,
+            onResizeColumn,
+            sortIndicatorRenderer,
+            overflowWidth,
+        } = this.props;
         let idx = 0;
         return (
             <div className="VTHeader" style={{ height: getHeaderHeight() }} ref={i => (this.headerEl = i)}>
@@ -73,7 +80,7 @@ export default class Header extends React.Component {
                         </div>
                     );
                 })}
-                <div className="VTHeaderCell" style={{ minWidth: 17, maxWidth: 17 }} />
+                <div className="VTHeaderCell" style={{ minWidth: overflowWidth, maxWidth: overflowWidth }} />
             </div>
         );
     }

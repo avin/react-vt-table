@@ -115,6 +115,7 @@ Additional row properties are contained in row's `props.data.rowProps`
 | :------------- | :---- | :-------: | :----------------------------------------------------------------------------------- |
 | columns        | array |           | Table columns array                                                                  |
 | rowClassName   | Func  |           | Row className determine function. <br>Function params: `(rowIndex)`.                 |
+| getRowWidth    | Func  |           | Get row actual width.                                                                |
 | getDataRowItem | Func  |           | Function to get cell value. <br>Function params: `({rowData, dataKey})`.             |
 | getColumnWidth | Func  |           | Function to get column width. <br>Function params: `(columnIndex)`.                  |
 | getDataRow     | Func  |           | Function to get row data item. <br>Function params: `(rowIndex)`.                    |

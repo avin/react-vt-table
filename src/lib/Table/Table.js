@@ -362,7 +362,7 @@ export default class Table extends React.Component {
     }
 
     renderHeader() {
-        const { children, disableHeader, headerHeight, sortIndicatorRenderer } = this.props;
+        const { children, disableHeader, headerHeight, sortIndicatorRenderer, overflowWidth } = this.props;
 
         if (disableHeader) {
             return null;
@@ -370,6 +370,7 @@ export default class Table extends React.Component {
 
         const componentProps = {
             children: children,
+            overflowWidth,
             height: headerHeight,
             getColumnWidth: this.getColumnWidth,
             getHeaderHeight: this.getHeaderHeight,

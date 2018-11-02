@@ -45,6 +45,7 @@ export default class Row extends React.PureComponent {
         let {
             dataList,
             getRowData,
+            getRowWidth,
             rowClassName,
             getCellValue,
             getColumnWidth,
@@ -57,6 +58,8 @@ export default class Row extends React.PureComponent {
             onMouseUp,
             onRightClick,
         } = data.rowProps;
+
+        style = { ...style, width: getRowWidth() };
 
         const evenClassName = index % 2 === 0 ? 'VTRowOdd' : 'VTRowEven';
         const customClassName = rowClassName && rowClassName(index);
