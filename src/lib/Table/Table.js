@@ -354,17 +354,10 @@ export default class Table extends React.Component {
     };
 
     scrollTo(scrollOffset) {
-        // Make scrollHeight safe value
-        const scrollHeight = this.listOuter.scrollHeight;
-        scrollOffset = Math.min(scrollOffset, scrollHeight);
-
         this.list && this.list.scrollTo(scrollOffset);
     }
 
     scrollToItem(index, align) {
-        // Make index safe value
-        index = Math.min(this.getDataSize(), index);
-
         this.list && this.list.scrollToItem(index, align);
     }
 
