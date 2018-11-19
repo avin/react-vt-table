@@ -353,12 +353,19 @@ export default class Table extends React.Component {
         onResizeColumn({ dataKey, columnIndex, resizeDiff: diff, newWidth });
     };
 
-    scrollTo(...args) {
-        this.list && this.list.scrollTo(...args);
+    scrollTo(scrollOffset) {
+        // Make scrollHeight safe value
+        const scrollHeight = this.listOuter.scrollHeight;
+        scrollOffset = Math.min(scrollOffset, scrollHeight);
+
+        this.list && this.list.scrollTo(scrollOffset);
     }
 
-    scrollToItem(...args) {
-        this.list && this.list.scrollToItem(...args);
+    scrollToItem(index, align) {
+        // Make index safe value
+        index = Math.min(this.getDataSize(), index);
+
+        this.list && this.list.scrollToItem(index, align);
     }
 
     renderHeader() {
