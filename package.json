@@ -1,6 +1,6 @@
 {
     "name": "react-vt-table",
-    "version": "0.6.6",
+    "version": "0.6.7",
     "main": "dist/index.js",
     "module": "dist/index.js",
     "files": [
@@ -76,6 +76,7 @@
         "rimraf": "^2.6.2"
     },
     "dependencies": {
+        "@babel/runtime": "^7.2.0",
         "classnames": "^2.2.6",
         "memoize-one": "^4.0.3",
         "react-draggable": "^3.0.5",
