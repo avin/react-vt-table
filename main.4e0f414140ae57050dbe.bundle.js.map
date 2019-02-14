@@ -1,1 +1,0 @@
-{"version":3,"file":"main.4e0f414140ae57050dbe.bundle.js","sources":["webpack:///./src/lib/Column/index.js"],"sourcesContent":["import Column from './Column';\nexport default Column;\n"],"mappings":"AAAA","sourceRoot":""}
