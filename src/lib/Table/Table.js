@@ -1,7 +1,6 @@
 import React from 'react';
 import { VariableSizeList as List } from 'react-window';
 import PropTypes from 'prop-types';
-import * as Immutable from 'immutable';
 import classNames from 'classnames';
 import Header from '../Header/Header';
 import Row from '../Row/Row';
@@ -300,7 +299,9 @@ export default class Table extends React.Component {
 
     getRowData = (index, data) => {
         data = data || this.props.data;
-        if (Immutable && Immutable.Iterable.isIterable(data)) {
+        if (typeof data.toJS === 'function') {
+            console.log(data);
+            debugger;
             return data.get(index);
         } else {
             return data[index];
@@ -308,7 +309,7 @@ export default class Table extends React.Component {
     };
 
     getCellValue = ({ rowData, dataKey }) => {
-        if (Immutable && Immutable.Iterable.isIterable(rowData)) {
+        if (typeof rowData.toJS === 'function') {
             return rowData.get(dataKey);
         } else {
             return rowData[dataKey];
@@ -318,7 +319,7 @@ export default class Table extends React.Component {
     getDataSize = () => {
         const { data } = this.props;
 
-        if (Immutable && Immutable.Iterable.isIterable(data)) {
+        if (typeof data.toJS === 'function') {
             return data.size;
         } else {
             return data.length;
