@@ -209,7 +209,7 @@ export default class Table extends React.Component {
         }
 
         if (this.autoScrolling && this.props.autoScroll && this.props.data) {
-            this.scrollToItem(this.props.data.size);
+            this.scrollToItem(this.getDataSize());
         }
     }
 
